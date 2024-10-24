@@ -8,15 +8,26 @@
 </head>
 <body>
     <header>
-        <h1>Design.pro</h1>
+        <h1><a class="logo" href="{% url 'index' %}">Design.pro</a></h1>
 
-        <div class="links">
-            <a href="">Войти</a>
-            <a href="">Зарегестрироваться</a>
-        </div>
+        {% if user.is_authenticated %}
+                <form method="post" action="{% url 'logout' %}" class="links">
+                    <a href="">Профиль</a>
+                    {% csrf_token %}
+                    <button type="submit">Выйти</button>
+                </form>
+
+        {% else %}
+
+            <form class="links">
+                <a href="{% url 'login' %}">Войти</a>
+                <a href="{% url 'register' %}">Зарегестрироваться</a>
+            </form>
+
+        {% endif %}
     </header>
 
-    {% block header %}
+    {% block content %}
 
     {% endblock %}
 </body>

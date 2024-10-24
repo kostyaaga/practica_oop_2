@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 
-{% block header %}
+{% block content %}
     <main>
         <h2>Главная</h2>
+        {% if user.is_authenticated %}
+            <p>Здарвсвтуй {{ user.username }}!</p>
 
-        <p>вы не вошли в профиль что бы увидеть свои работы войдите или зарегестрируйтесь :)</p>
+        {% else %}
+            <p>Здарвсвтуй гость o_0</p>
+        {% endif %}
+
     </main>
 {% endblock %}
