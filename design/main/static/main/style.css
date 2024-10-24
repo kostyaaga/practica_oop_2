@@ -45,9 +45,13 @@ header button{
     background-color: transparent;
     color: white;
     font-size: 20px;
-    margin-left: 5px;
+    margin-left: 15px;
     cursor: pointer;
     font-family: Mulish;
+}
+
+.header-link{
+    display: flex;
 }
 
 

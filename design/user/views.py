@@ -5,7 +5,8 @@ from django.contrib.auth import logout
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm
 from django.contrib import messages
-
+from .forms import RequestForm
+from .models import Request
 
 def user_login(request):
     if request.user.is_authenticated:
@@ -44,3 +45,19 @@ def register(request):
     else:
         form = CustomUserCreationForm()
     return render(request, 'user/register.html', {'form': form})
+
+def profile(request):
+    return render(request, 'user/profile.html')
+
+def create_request(request):
+    if request.method == 'POST':
+        form = RequestForm(request.POST, request.FILES)
+        if form.is_valid():
+            request_instance = form.save(commit=False)
+            request_instance.user = request.user
+            request_instance.save()
+            return redirect('profile')
+    else:
+        form = RequestForm()
+
+    return render(request, 'user/create_request.html', {'form': form})

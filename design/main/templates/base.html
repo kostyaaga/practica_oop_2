@@ -10,21 +10,28 @@
     <header>
         <h1><a class="logo" href="{% url 'index' %}">Design.pro</a></h1>
 
-        {% if user.is_authenticated %}
+        <div class="header-link">
+            {% if request.user.is_authenticated %}
+            {% if request.user.is_staff %}
+                <a href="{% url 'admin:index' %}">Перейти в админку</a>
+            {% else %}
+            {% endif %}
+
                 <form method="post" action="{% url 'logout' %}" class="links">
-                    <a href="">Профиль</a>
                     {% csrf_token %}
                     <button type="submit">Выйти</button>
                 </form>
 
-        {% else %}
+                <a href="{% url 'profile' %}">Профиль</a>
 
-            <form class="links">
-                <a href="{% url 'login' %}">Войти</a>
-                <a href="{% url 'register' %}">Зарегестрироваться</a>
-            </form>
+            {% else %}
+                <form class="links">
+                    <a href="{% url 'login' %}">Войти</a>
+                    <a href="{% url 'register' %}">Зарегистрироваться</a>
+                </form>
+            {% endif %}
+        </div>
 
-        {% endif %}
     </header>
 
     {% block content %}
