@@ -17,7 +17,7 @@ class Request(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    photo = models.ImageField(upload_to='request_photos/')
+    photo = models.ImageField(upload_to='requests_photos/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
