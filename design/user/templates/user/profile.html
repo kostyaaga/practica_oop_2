@@ -35,9 +35,13 @@
                         <p>Создано: {{ request.created_at }}</p>
 
                         {% if request.status == 'new' %}
-                            <form method="post" action="{% url 'delete_request' request.id %}" onsubmit="return confirm('Вы уверены, что хотите удалить эту заявку?');">
+                            <form method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
-                                <button type="submit" class="btn">Удалить заявку</button>
+                                <div>
+                                    <label for="id_avatar">Аватар:</label>
+                                    {{ profile_form.avatar }}
+                                </div>
+                                <button type="submit" class="btn">Обновить аватар</button>
                             </form>
                         {% endif %}
                     </li>
@@ -48,6 +52,12 @@
         {% endif %}
     </div>
 </main>
-
+<style>
+    input[type="file"] {
+        display: block; /* Убедитесь, что поле для загрузки отображается */
+        border: 1px solid #ccc; /* Добавить рамку для тестирования */
+        padding: 5px; /* Добавить отступы для тестирования */
+    }
+</style>
 
 {% endblock %}

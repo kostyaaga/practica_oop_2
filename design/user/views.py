@@ -3,7 +3,7 @@ from .forms import LoginForm
 from django.contrib.auth import logout
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, ProfileForm
 from .models import Request
 
 def user_login(request):
@@ -46,29 +46,28 @@ def register(request):
 
 
 def profile(request):
-    status = request.GET.get('status')
-
-    if status:
-        user_requests = Request.objects.filter(user=request.user, status=status)
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Профиль успешно обновлён!')
+            return redirect('profile')
     else:
-        user_requests = Request.objects.filter(user=request.user)
+        form = ProfileForm(instance=request.user.profile)
 
-    return render(request, 'user/profile.html', {
-        'user_requests': user_requests,
-        'selected_status': status
-    })
+    return render(request, 'user/profile.html', {'profile_form': form})
 
 
 def create_request(request):
     if request.method == 'POST':
-        form = RequestForm(request.POST, request.FILES)
+        form = Request(request.POST, request.FILES)
         if form.is_valid():
             request_instance = form.save(commit=False)
             request_instance.user = request.user
             request_instance.save()
             return redirect('profile')
     else:
-        form = RequestForm()
+        form = Request()
 
     return render(request, 'user/create_request.html', {
         'form': form
