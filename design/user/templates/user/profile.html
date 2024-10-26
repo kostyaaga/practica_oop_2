@@ -27,7 +27,7 @@
         {% if user_requests %}
     <ul class="request">
     {% for request in user_requests %}
-            <li>
+            <li >
                 <h3>{{ request.title }}</h3>
                 <p>{{ request.description }}</p>
                 <p>Категория: {{ request.category.name }}</p>
@@ -35,11 +35,12 @@
                 <p>Создано: {{ request.created_at }}</p>
 
                 {% if request.status == 'new' %}
-                    <form method="post" action="{% url 'delete_request' request.id %}" onsubmit="return confirm('Вы уверены, что хотите удалить эту заявку?');">
+                    <form class="form" method="post" action="{% url 'delete_request' request.id %}" onsubmit="return confirm('Вы уверены, что хотите удалить эту заявку?');">
                         {% csrf_token %}
                         <button type="submit" class="btn">Удалить заявку</button>
+                        <a href="{% url 'update_request_status' request.id %}" class="btn">Изменить статус</a>
                     </form>
-                    <a href="{% url 'update_request_status' request.id %}" class="btn">Изменить статус</a>
+
                 {% endif %}
                 </li>
             {% endfor %}

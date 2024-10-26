@@ -179,7 +179,6 @@ select::after {
 .request p{
     font-size: 20px;
     margin-bottom: 10px;
-    width: 200px;
 }
 
 .form-form{
@@ -192,5 +191,10 @@ select::after {
     background-color: #000000;
     border: none;
 }
+
+.request-li{
+    margin-top: 20px;
+}
+
 
 

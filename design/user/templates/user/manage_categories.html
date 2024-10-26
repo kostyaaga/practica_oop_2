@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<main>
+<main class="form">
     <h1>Управление категориями</h1>
 
     <a href="{% url 'add_category' %}" class="btn">Добавить категорию</a>
 
     <ul>
         {% for category in categories %}
-            <li>
+            <li class="request-li">
                 {{ category.name }}
                 <form method="post" action="{% url 'delete_category' category.id %}" style="display:inline;">
                     {% csrf_token %}
