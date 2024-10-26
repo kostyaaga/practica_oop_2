@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 import re
-from .models import Request, Category,Profile
+from .models import Request, Category, Profile
 
 class LoginForm(forms.Form):
     username = forms.CharField(
@@ -114,3 +114,11 @@ class UpdateStatusForm(forms.ModelForm):
             self.add_error('photo', 'Необходимо прикрепить фото для изменения статуса на "Выполнено".')
 
         return cleaned_data
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ['name']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Название категории'}),
+        }

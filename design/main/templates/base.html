@@ -14,6 +14,7 @@
             {% if request.user.is_authenticated %}
             {% if request.user.is_staff %}
                 <a href="{% url 'admin:index' %}">Перейти в админку</a>
+                <a href="{% url 'manage_categories' %}">Изменить категории</a>
             {% else %}
             {% endif %}
 

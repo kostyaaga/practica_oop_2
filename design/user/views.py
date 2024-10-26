@@ -1,10 +1,10 @@
 from django.contrib.auth import authenticate, login
-from .forms import LoginForm
+from .forms import LoginForm, RequestForm
 from django.contrib.auth import logout
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .forms import CustomUserCreationForm, UpdateStatusForm
-from .models import Request
+from .forms import CustomUserCreationForm, UpdateStatusForm, CategoryForm
+from .models import Request, Category
 
 def user_login(request):
     if request.user.is_authenticated:
@@ -48,10 +48,10 @@ def register(request):
 def profile(request):
     status = request.GET.get('status')
 
+    user_requests = Request.objects.filter(user=request.user).exclude(category__isnull=True)
+
     if status:
-        user_requests = Request.objects.filter(user=request.user, status=status)
-    else:
-        user_requests = Request.objects.filter(user=request.user)
+        user_requests = user_requests.filter(status=status)
 
     return render(request, 'user/profile.html', {
         'user_requests': user_requests,
@@ -106,3 +106,27 @@ def update_request_status(request, request_id):
         'form': form,
         'request': request_instance
     })
+
+def add_category(request):
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Категория успешно добавлена.')
+            return redirect('manage_categories')  # Название URL для управления категориями
+    else:
+        form = CategoryForm()
+
+    return render(request, 'user/add_category.html', {'form': form})
+
+def delete_category(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+
+    if request.method == 'POST':
+        category.delete()
+        messages.success(request, 'Категория успешно удалена.')
+        return redirect('manage_categories')
+
+def manage_categories(request):
+    categories = Category.objects.all()
+    return render(request, 'user/manage_categories.html', {'categories': categories})
