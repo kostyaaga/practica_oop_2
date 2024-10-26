@@ -2,9 +2,8 @@ from django.contrib.auth import authenticate, login
 from .forms import LoginForm
 from django.contrib.auth import logout
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CustomUserCreationForm
 from django.contrib import messages
-from .forms import RequestForm
+from .forms import CustomUserCreationForm
 from .models import Request
 
 def user_login(request):
@@ -85,3 +84,4 @@ def delete_request(request, request_id):
         messages.error(request, 'Ошибка: заявку можно удалить только в статусе "Новая".')
 
     return redirect('profile')
+
