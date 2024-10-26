@@ -25,7 +25,7 @@
         <h2>Ваши заявки</h2>
 
         {% if user_requests %}
-            <ul>
+            <ul class="request">
                 {% for request in user_requests %}
                     <li>
                         <h3>{{ request.title }}</h3>
@@ -33,17 +33,6 @@
                         <p>Категория: {{ request.category.name }}</p>
                         <p>Статус: {{ request.get_status_display }}</p>
                         <p>Создано: {{ request.created_at }}</p>
-
-                        {% if request.status == 'new' %}
-                            <form method="post" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                <div>
-                                    <label for="id_avatar">Аватар:</label>
-                                    {{ profile_form.avatar }}
-                                </div>
-                                <button type="submit" class="btn">Обновить аватар</button>
-                            </form>
-                        {% endif %}
                     </li>
                 {% endfor %}
             </ul>

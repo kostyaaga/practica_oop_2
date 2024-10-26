@@ -46,6 +46,7 @@ def register(request):
 
 
 def profile(request):
+    user_requests = Request.objects.filter(user=request.user)
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid():
@@ -55,7 +56,10 @@ def profile(request):
     else:
         form = ProfileForm(instance=request.user.profile)
 
-    return render(request, 'user/profile.html', {'profile_form': form})
+    return render(request, 'user/profile.html', {
+        'profile_form': form,
+        'user_requests': user_requests
+    })
 
 
 def create_request(request):
