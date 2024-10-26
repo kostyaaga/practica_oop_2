@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main>
+    <h1>Изменить статус заявки: {{ request.title }}</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Это должно содержать поле для загрузки фото -->
+        <button type="submit" class="btn">Сохранить изменения</button>
+    </form>
+    <a href="{% url 'profile' %}">Назад</a>
+</main>
+{% endblock %}
