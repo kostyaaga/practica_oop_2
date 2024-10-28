@@ -65,7 +65,6 @@ main {
 
 
 main p{
-    margin-top: 50px;
     font-size: 25px;
 }
 
@@ -73,7 +72,7 @@ main p{
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 5px;
     margin: 20px;
 }
 
@@ -165,12 +164,19 @@ select::after {
     pointer-events: none;
 }
 
+.requests{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
 .request{
     display: flex;
     flex-wrap: wrap;
     gap: 50px;
     margin-top: 30px;
 }
+
 
 .request h3{
     font-size: 30px;
@@ -192,9 +198,25 @@ select::after {
     border: none;
 }
 
-.request-li{
-    margin-top: 20px;
+.avatar{
+    width: 25%;
 }
+.profile{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.create textarea{
+    width: 80%;
+}
+
+.create input{
+    width: 80%;
+}
+.create select{
+    width: 80%;
+}
+
 
 
 

@@ -2,26 +2,27 @@
 {% load static %}
 
 {% block content %}
-<main>
-    <h1>Ваш профиль</h1>
+<h1>Ваш профиль</h1>
+<main class="profile">
 
-    <div class="profile-form">
+
+    <div class="profile-form form avatar">
         <h2>Ваш аватар</h2>
 
         {% if user.profile and user.profile.avatar %}
-            <img src="{{ user.profile.avatar.url }}" alt="Аватар" width="150" height="150">
+            <img class="rounded-circle" src="{{ user.profile.avatar.url }}" alt="Аватар" width="150" height="150">
         {% else %}
             <img src="{% static 'avatars/default.png' %}" alt="Аватар по умолчанию" width="150" height="150">
         {% endif %}
 
-        <form method="post" enctype="multipart/form-data">
+        <form class="form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ profile_form.avatar }}
-            <button type="submit" class="btn">Обновить аватар</button>
+            <button class="btn btn-primary" type="submit" >Обновить аватар</button>
         </form>
     </div>
 
-    <div class="requests">
+    <div class="requests " >
         <h2>Ваши заявки</h2>
         <a href="{% url 'create_request' %}">Создать заявку</a>
         {% if user_requests %}
@@ -37,8 +38,7 @@
                 {% if request.status == 'new' %}
                     <form class="form" method="post" action="{% url 'delete_request' request.id %}" onsubmit="return confirm('Вы уверены, что хотите удалить эту заявку?');">
                         {% csrf_token %}
-                        <button type="submit" class="btn">Удалить заявку</button>
-                        <a href="{% url 'update_request_status' request.id %}" class="btn">Изменить статус</a>
+                        <button class="btn btn-danger btn-red" type="submit" class="btn">Удалить заявку</button>
                     </form>
 
                 {% endif %}

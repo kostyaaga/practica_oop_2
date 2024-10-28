@@ -74,7 +74,7 @@ def create_request(request):
     else:
         form = RequestForm()
 
-    return render(request, 'user/update_request_status.html', {
+    return render(request, 'user/create_request.html', {
         'form': form
     })
 

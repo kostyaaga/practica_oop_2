@@ -72,6 +72,20 @@ class RequestForm(forms.ModelForm):
     class Meta:
         model = Request
         fields = ['title', 'description', 'category', 'photo']
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'form-control form-control-lg',
+            }),
+            'description': forms.Textarea(attrs={
+                'class:' : 'form-control des'
+            }),
+            'category': forms.Select(attrs={
+                'class': 'form-select',
+            }),
+            'photo': forms.FileInput(attrs={
+                'class': 'form-control',
+            })
+        }
 
     def clean_photo(self):
         photo = self.cleaned_data.get('photo')
@@ -88,7 +102,7 @@ class ProfileForm(forms.ModelForm):
         fields = ['avatar']
         widgets = {
             'avatar': forms.ClearableFileInput(attrs={
-                'class': 'form-control-file',
+                'class': 'form-control',
                 'title': 'Выберите новый аватар',
                 'style': 'display: block;',
             }),
@@ -101,7 +115,11 @@ class UpdateStatusForm(forms.ModelForm):
     class Meta:
         model = Request
         fields = ['status', 'comment', 'photo']
-
+        widgets = {
+            'status': forms.Select(attrs={
+                'class': 'form-select',
+            })
+        }
     def clean(self):
         cleaned_data = super().clean()
         status = cleaned_data.get('status')
@@ -122,3 +140,8 @@ class CategoryForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Название категории'}),
         }
+    def clean_name(self):
+        name = self.cleaned_data.get('name')
+        if Category.objects.filter(name__iexact=name).exists():
+            raise forms.ValidationError('Категория существует')
+        return name

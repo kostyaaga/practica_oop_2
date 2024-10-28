@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="{% static 'main/style.css' %}">
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
 </head>
 <body>
     <header>
@@ -18,11 +21,15 @@
             {% else %}
             {% endif %}
 
+
                 <form method="post" action="{% url 'logout' %}" class="links">
                     {% csrf_token %}
                     <button type="submit">Выйти</button>
                 </form>
                 <a href="{% url 'profile' %}">Профиль</a>
+
+
+
 
             {% else %}
                 <form class="links">
